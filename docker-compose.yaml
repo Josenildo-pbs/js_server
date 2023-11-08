@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  nest-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: js_server
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db:
+    image: postgres:16
+    container_name: postgresprisma
+    restart: always
+    ports:
+      - 49154:49154
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=Maniaco10
+      - POSTGRES_USER=js_server
+    command: -p 49154
+
+volumes:
+  data:
